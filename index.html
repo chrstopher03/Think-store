@@ -1,149 +1,130 @@
-
-<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html><html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juego para Ithzel - De parte de Chito</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cartita para Ithzel</title>
   <style>
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', sans-serif;
-      background-image: url(Snoopy\ Vinyl\ Decal.jpg);
       margin: 0;
-      padding: 20px;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom, #ffe6f0, #fff);
+      overflow-x: hidden;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
-    }
-    .quiz-container {
-      max-width: 500px;
-      margin: auto;
-      background-color: #ffe0b2;
       padding: 20px;
+    }
+    .card {
+      background: #fff0f5;
       border-radius: 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      padding: 30px;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
     }
-    .question {
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    .option {
-      display: block;
-      background-color: #fff;
-      margin: 10px auto;
-      padding: 10px;
-      border-radius: 10px;
-      width: 80%;
-      cursor: pointer;
-      border: 2px solid #ffa726;
-    }
-    .option:hover {
-      background-color: #ffcc80;
-    }
-    #result, #final-message {
-      margin-top: 20px;
-      font-size: 18px;
-    }
-    #love-letter {
-      display: none;
-      background-color: #ffe0e0;
-      padding: 20px;
-      margin-top: 30px;
+    h1 { color: #e60073; margin-bottom: 20px; }
+    p { font-size: 1.1em; color: #333; }
+    .snoopy-img {
+      max-width: 100%;
       border-radius: 15px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      margin: 20px 0;
     }
-    audio {
-      margin-top: 20px;
+    button {
+      background-color: #ff66a3;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background-color: #ff3385;
+    }
+    .floating-hearts {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+    }
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: float 4s linear infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { top: 0; left: -10px; }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <div class="quiz-container">
-    <h2>¡Hola Ithzel!</h2>
-    <div id="quiz">
-      <div class="question" id="question"></div>
-      <div id="options"></div>
+  <div class="container">
+    <div class="card">
+      <h1>Hola Ithzel</h1>
+      <p>
+        Qué hermosa te ves el día de hoy, mi vida. Nunca olvides lo mucho que te quiero, y haré todo lo posible para que me elijas
+        y te des cuenta de que quiero todo contigo y disculpame por actitud de hoy y porfa dejate querer mi vida y cuidao con ese chavo cielo, te quierooooo. Esta cartita te la manda tu chico.
+      </p>
+      <img class="snoopy-img" src="WhatsApp Image 2025-04-24 at 5.16.02 PM.jpeg" alt="Snoopy enamorado">
+      <button onclick="mostrarFrase()">Toca aquí para ver algo lindo</button>
+      <p id="frase"></p>
+      <audio controls autoplay loop>
+        <source src="Prince Royce - Darte un Beso.mp3" type="audio/mp3">
+        Tu navegador no soporta la reproducción de audio.
+      </audio>
     </div>
-    <div id="result"></div>
   </div>
-
-  <div id="love-letter">
-    <h3>¡Felicidades mi niña Ithzel, lo lograste!</h3>
-    <p>En esta nota quiero decirte lo increíble que eres, quiero que sepas que estoy muy enamorado de ti. Déjame ser la persona que te ame para toda la vida. Qué lindo es poder estar hablando contigo aquí en persona, es lo más lindo. Porfa, nunca te canses de mí. Qué hermosa te ves mi niña.</p>
-    <p><strong>De parte de Chito, te quieroooo muchooo mi niña linda</strong></p>
-    <audio controls autoplay>
-      <source src="cancion.mp3.mp3" type="audio/mpeg">
-      Tu navegador no soporta el audio.
-    </audio>
-  </div>
-
-  <script>
-    const questions = [
-      {
-        question: "¿Cómo se llama el protagonista de Haikyu?",
-        options: ["Kageyama", "Hinata", "Oikawa"],
-        answer: "Hinata"
-      },
-      {
-        question: "¿Quién es el armador principal de Karasuno?",
-        options: ["Sugawara", "Hinata", "Kageyama"],
-        answer: "Kageyama"
-      },
-      {
-        question: "¿Cuál es el apodo de Nishinoya?",
-        options: ["El Gran Rey", "El Pequeño Gigante", "El Guardián Divino"],
-        answer: "El Guardián Divino"
-      },
-      {
-        question: "¿Cómo se llama el capitán de Karasuno?",
-        options: ["Daichi", "Asahi", "Tanaka"],
-        answer: "Daichi"
-      },
-      {
-        question: "¿Qué posición juega Tsukishima?",
-        options: ["Central", "Libero", "Armador"],
-        answer: "Central"
-      }
+  <div class="floating-hearts" id="hearts"></div>  <script>
+    const frases = [
+      'Eres mi persona favorita en el mundo entero.',
+      'Cada día contigo es un regalo hermoso.',
+      'Si pudiera darte una cosa en la vida, te daría la capacidad de verte a través de mis ojos.',
+      'Tú y yo sabemos que pedo mi vida, te quiero pa toda la vida.',
+      'No hay nadie más con quien prefiera ver atardeceres.'
+      
+      
     ];
 
-    let currentQuestion = 0;
-    let correctAnswers = 0;
-
-    function loadQuestion() {
-      const q = questions[currentQuestion];
-      document.getElementById("question").textContent = q.question;
-      const optionsDiv = document.getElementById("options");
-      optionsDiv.innerHTML = "";
-      q.options.forEach(opt => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
-        btn.className = "option";
-        btn.onclick = () => checkAnswer(opt);
-        optionsDiv.appendChild(btn);
-      });
+    function mostrarFrase() {
+      const frase = frases[Math.floor(Math.random() * frases.length)];
+      document.getElementById('frase').innerText = frase;
+      crearCorazones();
     }
 
-    function checkAnswer(selected) {
-      if (selected === questions[currentQuestion].answer) {
-        correctAnswers++;
-      }
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        loadQuestion();
-      } else {
-        showResult();
-      }
-    }
-
-    function showResult() {
-      const quizDiv = document.getElementById("quiz");
-      quizDiv.innerHTML = "";
-      if (correctAnswers === questions.length) {
-        document.getElementById("love-letter").style.display = "block";
-      } else {
-        document.getElementById("result").textContent = `Adivinaste ${correctAnswers} de ${questions.length}. ¡Intenta de nuevo para ver la sorpresa!`;
+    function crearCorazones() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.top = Math.random() * 100 + 'vh';
+        heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+        document.getElementById('hearts').appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
       }
     }
-
-    loadQuestion();
-  </script>
-</body>
+  </script></body>
 </html>
