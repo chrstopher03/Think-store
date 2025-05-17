@@ -1,130 +1,226 @@
-<!DOCTYPE html><html lang="es">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cartita para Ithzel</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom, #ffe6f0, #fff);
-      overflow-x: hidden;
-    }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      text-align: center;
-      padding: 20px;
-    }
-    .card {
-      background: #fff0f5;
-      border-radius: 20px;
-      padding: 30px;
-      max-width: 500px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      margin-bottom: 30px;
-    }
-    h1 { color: #e60073; margin-bottom: 20px; }
-    p { font-size: 1.1em; color: #333; }
-    .snoopy-img {
-      max-width: 100%;
-      border-radius: 15px;
-      margin: 20px 0;
-    }
-    button {
-      background-color: #ff66a3;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 10px;
-      font-size: 1em;
-      cursor: pointer;
-      margin-top: 10px;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background-color: #ff3385;
-    }
-    .floating-hearts {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 999;
-    }
-    .heart {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      transform: rotate(45deg);
-      animation: float 4s linear infinite;
-    }
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      border-radius: 50%;
-    }
-    .heart::before { top: -10px; left: 0; }
-    .heart::after { top: 0; left: -10px; }
-    @keyframes float {
-      0% { transform: translateY(0) rotate(45deg); opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(45deg); opacity: 0; }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Aventura rosada de Hello Kitty</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap');
+  body {
+    background-color: #f4d1d1; /* Rosado palo */
+    font-family: 'Gloria Hallelujah', cursive, sans-serif;
+    color: #5a2a2a;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 15px;
+    border-radius: 15px;
+  }
+  h1, h2 {
+    color: #d85c78;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  button {
+    background-color: #d85c78;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin: 10px 6px;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #c24e68;
+  }
+  .hidden {
+    display: none;
+  }
+  .message {
+    margin: 15px 0;
+    font-size: 18px;
+    text-align: center;
+  }
+  input[type="text"] {
+    font-size: 18px;
+    padding: 10px;
+    margin: 10px 0 15px 0;
+    border-radius: 10px;
+    border: 2px solid #d85c78;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  #game {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(216, 92, 120, 0.3);
+    padding: 20px;
+  }
+  .character-img {
+    display: block;
+    margin: 0 auto 15px auto;
+    max-width: 160px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(216, 92, 120, 0.6);
+  }
+  pre {
+    background: #ffe0e6;
+    padding: 15px;
+    border-radius: 15px;
+    font-style: italic;
+    white-space: pre-wrap;
+    text-align: center;
+    font-size: 16px;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>Hola Ithzel</h1>
-      <p>
-        Qué hermosa te ves el día de hoy, mi vida. Nunca olvides lo mucho que te quiero, y haré todo lo posible para que me elijas
-        y te des cuenta de que quiero todo contigo y disculpame por actitud de hoy y porfa dejate querer mi vida y cuidao con ese chavo cielo, te quierooooo. Esta cartita te la manda tu chico.
-      </p>
-      <img class="snoopy-img" src="WhatsApp Image 2025-04-24 at 5.16.02 PM.jpeg" alt="Snoopy enamorado">
-      <button onclick="mostrarFrase()">Toca aquí para ver algo lindo</button>
-      <p id="frase"></p>
-      <audio controls autoplay loop>
-        <source src="Prince Royce - Darte un Beso.mp3" type="audio/mp3">
-        Tu navegador no soporta la reproducción de audio.
-      </audio>
+
+<h1>La aventura rosada de Hello Kitty</h1>
+
+<div id="game">
+
+  <div id="intro" class="scene">
+    <img class="character-img" src="64a0ad6a-025e-4973-820e-196d82dc4ba1.jpg" alt="Hello Kitty" />
+    <p>Hola, valiente aventurera. Hello Kitty y su perrito travieso necesitan tu ayuda para recuperar el lazo rosado perdido en el Bosque de las Risitas. ¿Estás lista para empezar esta misión divertida y llena de sorpresas?</p>
+    <button onclick="nextScene('scene1')">¡Sí, vamos!</button>
+  </div>
+
+  <div id="scene1" class="scene hidden">
+    <img class="character-img" src="41eead94-9da3-4bee-9fa0-98fec68f2f9c.jpg" alt="Hello Kitty" />
+    <h2>Escena 1: El lazo desaparecido</h2>
+    <p>Hello Kitty: “¡Oh no! Mi lazo rosado desapareció y mi perrito travieso está muy sospechoso.”</p>
+    <p>¿Qué es lo primero que harías si tuvieras un perrito que es un experto en esconder cosas?</p>
+    <button onclick="answer1('a')">Buscar por toda la casa</button>
+    <button onclick="answer1('b')">Darle un hueso para distraerlo</button>
+    <button onclick="answer1('c')">Preguntarle con ojitos tiernos dónde está el lazo</button>
+    <div id="response1" class="message"></div>
+    <div id="reto1" class="hidden">
+      <p><b>Reto:</b> Imita cómo ladraría un perrito travieso que quiere esconder el lazo sin que lo vean.</p>
+      <button onclick="nextScene('scene2')">¡Hecho! Siguiente.</button>
     </div>
   </div>
-  <div class="floating-hearts" id="hearts"></div>  <script>
-    const frases = [
-      'Eres mi persona favorita en el mundo entero.',
-      'Cada día contigo es un regalo hermoso.',
-      'Si pudiera darte una cosa en la vida, te daría la capacidad de verte a través de mis ojos.',
-      'Tú y yo sabemos que pedo mi vida, te quiero pa toda la vida.',
-      'No hay nadie más con quien prefiera ver atardeceres.'
-      
-      
-    ];
 
-    function mostrarFrase() {
-      const frase = frases[Math.floor(Math.random() * frases.length)];
-      document.getElementById('frase').innerText = frase;
-      crearCorazones();
-    }
+  <div id="scene2" class="scene hidden">
+    <img class="character-img" src="48d7ccd1-b4cc-44c0-a97e-28890513828a.jpg" alt="Perrito" />
+    <h2>Escena 2: El encuentro con el búho bromista</h2>
+    <p>Búho bromista: “¿Quieres pasar al siguiente nivel? Primero debes contarme, ¿cuál es la cosa más divertida que te ha pasado con un perrito?”</p>
+    <input type="text" id="funnyStory" placeholder="Escribe tu respuesta aquí" />
+    <button onclick="answer2()">Enviar</button>
+    <div id="response2" class="message"></div>
+  </div>
 
-    function crearCorazones() {
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.top = Math.random() * 100 + 'vh';
-        heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
-        document.getElementById('hearts').appendChild(heart);
-        setTimeout(() => heart.remove(), 4000);
-      }
+  <div id="scene3" class="scene hidden">
+    <img class="character-img" src="d0f74978-267e-4ce4-81f6-89f7245ed79e.jpg" alt="Perrito" />
+    <h2>Acertijo</h2>
+    <p>“En el bosque hay un árbol que nunca crece, aunque siempre está lleno de hojas. ¿Qué es?”</p>
+    <input type="text" id="riddleAnswer" placeholder="Tu respuesta aquí" />
+    <button onclick="checkRiddle()">Responder</button>
+    <div id="riddleResponse" class="message"></div>
+    <div id="reto2" class="hidden">
+      <p><b>Reto:</b> Haz una cara graciosa como si el búho bromista te estuviera mirando fijamente mientras esperas la respuesta.</p>
+      <button onclick="nextScene('scene4')">¡Hecho! Siguiente.</button>
+    </div>
+  </div>
+
+  <div id="scene4" class="scene hidden">
+    <img class="character-img" src="a2f700c8-d6d1-4b49-8451-a70ab89c2981.jpg" alt="Hello Kitty" />
+    <h2>Escena 3: El rescate del lazo</h2>
+    <p>Hello Kitty: “¡Ya casi lo tenemos! Pero el perrito se metió en un charco de barro y está todo sucio.”</p>
+    <p>¿Si fueras Hello Kitty, cómo limpiarías al perrito sin que se enoje?</p>
+    <button onclick="answer3('a')">Con mucho cuidado y paciencia</button>
+    <button onclick="answer3('b')">Con un super baño de burbujas rosas</button>
+    <button onclick="answer3('c')">Dejándolo que se seque solo (aunque se vea raro)</button>
+    <div id="response3" class="message"></div>
+    <div id="reto3" class="hidden">
+      <p><b>Reto:</b> Inventa una canción corta para animar al perrito mientras lo limpias.</p>
+      <button onclick="nextScene('final')">¡Hecho! Finalizar aventura.</button>
+    </div>
+  </div>
+
+  <div id="final" class="scene hidden">
+    <img class="character-img" src="aec40b51-340d-4a00-a3a3-742514631bd2.jpg" alt="Hello Kitty" />
+    <h2>¡Misión cumplida!</h2>
+    <p>Hello Kitty: “¡Gracias por ayudarme! Ahora el lazo rosado está a salvo, y el perrito travieso aprendió a no esconder más cosas.”</p>
+    <p><b>Mensaje especial:</b></p>
+    <pre>
+Hola Ari,
+
+Quiero que sepas que esta aventura no es solo un juego, sino una pequeña manera de recordarte lo especial que eres para mí.
+
+Me encanta cómo tus gustos únicos, tu risa y tu manera de ser hacen que todo sea más divertido y brillante, como un lazo rosado que nunca pierde su color.
+
+Gracias por darme la oportunidad de conocerte de nuevo y caminar esta aventura juntos, con paciencia, cariño y sinceridad.
+
+Espero que cada momento que compartamos siga llenándote de alegría y que sigamos creando recuerdos que valgan la pena.
+
+Con mucho cariño,
+Tu admirador secreto
+    </pre>
+  </div>
+
+</div>
+
+<script>
+  function showScene(id) {
+    document.querySelectorAll('.scene').forEach(scene => {
+      scene.classList.add('hidden');
+    });
+    document.getElementById(id).classList.remove('hidden');
+  }
+
+  function nextScene(id) {
+    showScene(id);
+  }
+
+  function answer1(choice) {
+    const response = document.getElementById('response1');
+    const reto = document.getElementById('reto1');
+    let message = '';
+    if (choice === 'a') message = '¡Eres todo un detective!';
+    else if (choice === 'b') message = 'El perrito estaría encantado con ese plan.';
+    else if (choice === 'c') message = 'Con esos ojitos tiernos seguro te dirá dónde está.';
+    response.textContent = message;
+    reto.classList.remove('hidden');
+  }
+
+  function answer2() {
+    const story = document.getElementById('funnyStory').value.trim();
+    const response = document.getElementById('response2');
+    if (story.length === 0) {
+      response.textContent = 'Por favor, escribe algo divertido.';
+      return;
     }
-  </script></body>
+    response.textContent = '¡Jajaja, esa historia me hizo reír mucho!';
+    setTimeout(() => nextScene('scene3'), 2000);
+  }
+
+  function checkRiddle() {
+    const answer = document.getElementById('riddleAnswer').value.trim().toLowerCase();
+    const response = document.getElementById('riddleResponse');
+    const reto = document.getElementById('reto2');
+    if (answer === 'libro') {
+      response.textContent = '¡Correcto! Ese es el árbol que nunca crece.';
+      reto.classList.remove('hidden');
+    } else {
+      response.textContent = 'No es correcto, intenta otra vez.';
+    }
+  }
+
+  function answer3(choice) {
+    const response = document.getElementById('response3');
+    const reto = document.getElementById('reto3');
+    let message = '';
+    if (choice === 'a') message = '¡Muy amable y cuidadosa!';
+    else if (choice === 'b') message = '¡Un baño de burbujas rosas suena divertido!';
+    else if (choice === 'c') message = '¡Pobrecito, pero seguro se seca rápido!';
+    response.textContent = message;
+    reto.classList.remove('hidden');
+  }
+</script>
+
+</body>
 </html>
